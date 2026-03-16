@@ -1384,6 +1384,13 @@ typedef struct {
 #endif /* DRV_BYTE_ORDER */
 } ism6hg256x_haodr_cfg_t;
 
+typedef enum {
+  ISM6HG256X_HAODR_SEL_00,
+  ISM6HG256X_HAODR_SEL_01,
+  ISM6HG256X_HAODR_SEL_02,
+  ISM6HG256X_HAODR_SEL_03,
+} ism6hg256x_haodr_sel_t;
+
 #define ISM6HG256X_EMB_FUNC_CFG                   0x63U
 typedef struct {
 #if DRV_BYTE_ORDER == DRV_LITTLE_ENDIAN
@@ -4116,16 +4123,26 @@ typedef enum {
   ISM6HG256X_ODR_HA01_AT_2000Hz   = 0x1A,
   ISM6HG256X_ODR_HA01_AT_4000Hz   = 0x1B,
   ISM6HG256X_ODR_HA01_AT_8000Hz   = 0x1C,
-  ISM6HG256X_ODR_HA02_AT_13Hz     = 0x23,
-  ISM6HG256X_ODR_HA02_AT_26Hz     = 0x24,
-  ISM6HG256X_ODR_HA02_AT_52Hz     = 0x25,
-  ISM6HG256X_ODR_HA02_AT_104Hz    = 0x26,
-  ISM6HG256X_ODR_HA02_AT_208Hz    = 0x27,
-  ISM6HG256X_ODR_HA02_AT_417Hz    = 0x28,
-  ISM6HG256X_ODR_HA02_AT_833Hz    = 0x29,
-  ISM6HG256X_ODR_HA02_AT_1667Hz   = 0x2A,
-  ISM6HG256X_ODR_HA02_AT_3333Hz   = 0x2B,
-  ISM6HG256X_ODR_HA02_AT_6667Hz   = 0x2C,
+  ISM6HG256X_ODR_HA02_AT_12Hz5    = 0x23,
+  ISM6HG256X_ODR_HA02_AT_25Hz     = 0x24,
+  ISM6HG256X_ODR_HA02_AT_50Hz     = 0x25,
+  ISM6HG256X_ODR_HA02_AT_100Hz    = 0x26,
+  ISM6HG256X_ODR_HA02_AT_200Hz    = 0x27,
+  ISM6HG256X_ODR_HA02_AT_400Hz    = 0x28,
+  ISM6HG256X_ODR_HA02_AT_800Hz    = 0x29,
+  ISM6HG256X_ODR_HA02_AT_1600Hz   = 0x2A,
+  ISM6HG256X_ODR_HA02_AT_3200Hz   = 0x2B,
+  ISM6HG256X_ODR_HA02_AT_6400Hz   = 0x2C,
+  ISM6HG256X_ODR_HA03_AT_13Hz     = 0x33,
+  ISM6HG256X_ODR_HA03_AT_26Hz     = 0x34,
+  ISM6HG256X_ODR_HA03_AT_52Hz     = 0x35,
+  ISM6HG256X_ODR_HA03_AT_104Hz    = 0x36,
+  ISM6HG256X_ODR_HA03_AT_208Hz    = 0x37,
+  ISM6HG256X_ODR_HA03_AT_417Hz    = 0x38,
+  ISM6HG256X_ODR_HA03_AT_833Hz    = 0x39,
+  ISM6HG256X_ODR_HA03_AT_1667Hz   = 0x3A,
+  ISM6HG256X_ODR_HA03_AT_3333Hz   = 0x3B,
+  ISM6HG256X_ODR_HA03_AT_6667Hz   = 0x3C,
 } ism6hg256x_data_rate_t;
 int32_t ism6hg256x_xl_data_rate_set(const ism6hg256x_ctx_t *ctx,
                                     ism6hg256x_data_rate_t val);
@@ -4136,13 +4153,33 @@ int32_t ism6hg256x_gy_data_rate_set(const ism6hg256x_ctx_t *ctx,
 int32_t ism6hg256x_gy_data_rate_get(const ism6hg256x_ctx_t *ctx,
                                     ism6hg256x_data_rate_t *val);
 
+ism6hg256x_data_rate_t ism6hg256x_float_to_data_rate(uint8_t haodr_sel,
+                                                     float_t val);
+int32_t ism6hg256x_data_rate_to_float(ism6hg256x_data_rate_t val,
+                                      float_t *odr);
+
 typedef enum {
-  ISM6HG256X_HG_XL_ODR_OFF         = 0x0,
-  ISM6HG256X_HG_XL_ODR_AT_480Hz    = 0x3,
-  ISM6HG256X_HG_XL_ODR_AT_960Hz    = 0x4,
-  ISM6HG256X_HG_XL_ODR_AT_1920Hz   = 0x5,
-  ISM6HG256X_HG_XL_ODR_AT_3840Hz   = 0x6,
-  ISM6HG256X_HG_XL_ODR_AT_7680Hz   = 0x7,
+  ISM6HG256X_HG_XL_ODR_OFF            = 0x0,
+  ISM6HG256X_HG_XL_ODR_AT_480Hz       = 0x3,
+  ISM6HG256X_HG_XL_ODR_AT_960Hz       = 0x4,
+  ISM6HG256X_HG_XL_ODR_AT_1920Hz      = 0x5,
+  ISM6HG256X_HG_XL_ODR_AT_3840Hz      = 0x6,
+  ISM6HG256X_HG_XL_ODR_AT_7680Hz      = 0x7,
+  ISM6HG256X_HG_XL_ODR_HA01_AT_500Hz  = 0x13,
+  ISM6HG256X_HG_XL_ODR_HA01_AT_1000Hz = 0x14,
+  ISM6HG256X_HG_XL_ODR_HA01_AT_2000Hz = 0x15,
+  ISM6HG256X_HG_XL_ODR_HA01_AT_4000Hz = 0x16,
+  ISM6HG256X_HG_XL_ODR_HA01_AT_8000Hz = 0x17,
+  ISM6HG256X_HG_XL_ODR_HA02_AT_400Hz  = 0x23,
+  ISM6HG256X_HG_XL_ODR_HA02_AT_800Hz  = 0x24,
+  ISM6HG256X_HG_XL_ODR_HA02_AT_1600Hz = 0x25,
+  ISM6HG256X_HG_XL_ODR_HA02_AT_3200Hz = 0x26,
+  ISM6HG256X_HG_XL_ODR_HA02_AT_6400Hz = 0x27,
+  ISM6HG256X_HG_XL_ODR_HA03_AT_417Hz  = 0x33,
+  ISM6HG256X_HG_XL_ODR_HA03_AT_833Hz  = 0x34,
+  ISM6HG256X_HG_XL_ODR_HA03_AT_1667Hz = 0x35,
+  ISM6HG256X_HG_XL_ODR_HA03_AT_3333Hz = 0x36,
+  ISM6HG256X_HG_XL_ODR_HA03_AT_6667Hz = 0x37,
 } ism6hg256x_hg_xl_data_rate_t;
 int32_t ism6hg256x_hg_xl_data_rate_set(const ism6hg256x_ctx_t *ctx,
                                        ism6hg256x_hg_xl_data_rate_t val,
@@ -4150,6 +4187,10 @@ int32_t ism6hg256x_hg_xl_data_rate_set(const ism6hg256x_ctx_t *ctx,
 int32_t ism6hg256x_hg_xl_data_rate_get(const ism6hg256x_ctx_t *ctx,
                                        ism6hg256x_hg_xl_data_rate_t *val,
                                        uint8_t *reg_out_en);
+ism6hg256x_hg_xl_data_rate_t ism6hg256x_hg_float_to_data_rate(uint8_t haodr_sel,
+                                                              float_t val);
+int32_t ism6hg256x_hg_data_rate_to_float(ism6hg256x_hg_xl_data_rate_t val,
+                                         float_t *odr);
 
 typedef enum {
   ISM6HG256X_XL_HIGH_PERFORMANCE_MD   = 0x0,
